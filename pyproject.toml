@@ -1,0 +1,32 @@
+[tool.poetry]
+name = "sclkme"
+version = "0.1.0"
+description = "A Landmark-based Approach for Generating Multi-cellular Sample Embeddings from Single-cell Data"
+authors = ["haidyi <haidyi@cs.unc.edu>"]
+license = "GPL2"
+readme = "README.md"
+packages = [{include = "sclkme", from="src"}]
+
+[tool.poetry.dependencies]
+python = "^3.8,<3.11"
+scanpy = "1.9.3"
+numpy = ">=1.20,<1.24"
+pandas = "1.4.4"
+geosketch = "^1.2"
+pycytodata = "0.1.1"
+readfcs = "^1.1.7"
+rich = "^13.6.0"
+
+[tool.poetry.group.dev.dependencies]
+python-igraph = "^0.10.2"
+leidenalg = "^0.9.0"
+phate = "^1.0.10"
+jupyterlab = "^4.0.7"
+mudata = "^0.2.3"
+jupyter = "^1.0.0"
+ipywidgets = "^8.1.1"
+statannotations = "^0.6.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
