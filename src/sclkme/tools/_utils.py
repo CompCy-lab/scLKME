@@ -17,11 +17,11 @@ def random_feats(
     X: np.ndarray
         array of input data (dimensions = cells x features)
     gamma: Union([int, float]) (default = 1)
-        scale for standard deviation of the normal distribution  
+        scale for standard deviation of the normal distribution
     D: int (default = 2000):
-        dimensionality of the random Fourier frequency features, D/2 sin and D/2 cos basis  
+        dimensionality of the random Fourier frequency features, D/2 sin and D/2 cos basis
     frequency_seed: int (default = None):
-        random state parameter  
+        random state parameter
     ----------
     Returns
     phi: np.ndarray

@@ -4,7 +4,7 @@ import multiprocessing as mp
 import queue
 import signal
 import traceback
-from typing import Iterable, Callable, Any, List
+from typing import Any, Callable, Iterable, List
 
 from ._joboutput import JobOutput
 
@@ -27,7 +27,7 @@ class MpRunner(object):
 
     @staticmethod
     def _parse_num_workers(num_workers: int) -> int:
-        """ parse the number of workers
+        """parse the number of workers
 
         num_workers :param: number of workers intended to use
         :return: parsed number of workers to use,
@@ -40,7 +40,7 @@ class MpRunner(object):
             return int(num_workers)
 
     def _parallel_exec(self, jobs: Iterable, exec_func: Callable) -> List[JobOutput]:
-        """ handle multiple defined jobs via multiprocessing
+        """handle multiple defined jobs via multiprocessing
 
         jobs :param: An iterable list that defines the jobs
         :return: None
@@ -55,7 +55,9 @@ class MpRunner(object):
 
         workers = []
         for _ in range(self.num_workers):
-            proc = mp.Process(target=self._executor_hook, args=(job_queue, result_queue, exec_func))
+            proc = mp.Process(
+                target=self._executor_hook, args=(job_queue, result_queue, exec_func)
+            )
             proc.start()
             workers.append(proc)
 
@@ -76,17 +78,21 @@ class MpRunner(object):
 
     @staticmethod
     def executor(jobid: int, job: Any, exec_func: Callable) -> JobOutput:
-        """ job handler """
+        """job handler"""
         # noinspection PyBroadException
         try:
             exec_rc = exec_func(job)
-            return JobOutput(jobid=jobid, run_ok=True, result=dict(output=exec_rc, msg=""))
+            return JobOutput(
+                jobid=jobid, run_ok=True, result=dict(output=exec_rc, msg="")
+            )
         except Exception:
             msg = traceback.format_exc()
-            return JobOutput(jobid=jobid, run_ok=False, result=dict(output=None, msg=msg))
+            return JobOutput(
+                jobid=jobid, run_ok=False, result=dict(output=None, msg=msg)
+            )
 
     def run(self, jobs: Iterable, exec_func: Callable) -> List[JobOutput]:
-        """ the main func to run the jobs """
+        """the main func to run the jobs"""
         # global multiprocessing_runner
         # multiprocessing_runner = self
         results = None
@@ -104,10 +110,7 @@ class MpRunner(object):
         return results
 
     def _executor_hook(
-        self,
-        job_queue: mp.Queue,
-        result_queue: mp.Queue,
-        exec_func: Callable
+        self, job_queue: mp.Queue, result_queue: mp.Queue, exec_func: Callable
     ):
         # ignore the CTRL+C signaling
         signal.signal(signal.SIGINT, signal.SIG_IGN)
