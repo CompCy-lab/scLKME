@@ -30,3 +30,26 @@ statannotations = "^0.6.0"
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.pyright]
+# venv path and venv name
+venvPath = "."
+venv = ".venv"
+
+# set project src and include
+root = "./src"
+
+include = "./src/**/*.py"
+exclude = [
+    "tests/",
+    ".venv/",
+    "build/"
+]
+
+# report missing imports
+reportMissingImports = true
+
+# report unused imports
+reportUnusedImport = true
+
+typeCheckingMode = "basic"
