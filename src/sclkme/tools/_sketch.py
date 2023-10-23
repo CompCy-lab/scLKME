@@ -4,7 +4,7 @@ from typing import Any, Dict, Literal, Optional, Union
 import numpy as np
 import scipy
 from anndata import AnnData
-from numpy import random
+from scanpy._utils import AnyRandom
 from scanpy.tools._utils import _choose_representation
 from sklearn.utils import check_random_state
 
@@ -13,10 +13,10 @@ from ._utils import random_feats
 
 def sketch(
     adata: AnnData,
-    n_sketch: Optional[int] = None,
+    n_sketch: int,
     use_rep: Optional[str] = None,
     n_pcs: Optional[int] = None,
-    random_state: Union[None, int, random.RandomState] = 0,
+    random_state: AnyRandom = 0,
     method: Literal["gs", "kernel_herding", "random"] = "gs",
     replace: bool = False,
     inplace: bool = False,
@@ -25,13 +25,17 @@ def sketch(
     copy: bool = False,
 ) -> Optional[AnnData]:
     """\
-    Find a compact subset of samples for sketching a large single-cell dataset
+    Cell sketching :cite:`Hie19gs` :cite:`Vishal22`
 
-    This function supports three different methods to sketch a large single-cell
-    dataset. if `method=='gs'`, cells are subsampled using `geometric sketching`
-    [Hie, Brian, et al, 2019]. if `method=='kernel_herding'`, cells are subsampled
-    using `kernel herding` [B., V. Athreya, et al, 2022]. if `method=='random'`,
-    cells will be randomly sampled.
+    *sketch* is a function that can be used for summarizing the landscape of
+    a large single-cell dataset by selecting a compact subset of cells. This
+    function supports three different methods to perform cell sketching:
+    geoemetric sketching :cite:`Hie19gs`, kernel herding :cite:`Vishal22`, and simple
+    random sampling without replacement.
+
+    .. note::
+       More information and bug reports about the geometric sketching method `here
+       <https://github.com/brianhie/geosketch>`__.
 
     Parameters
     ----------
@@ -49,7 +53,7 @@ def sketch(
     random_state
         A numpy random seed.
     method
-        Use 'gs' [HieBrian19]_, 'kernel_herding' [Vishal22]_ or 'random' for
+        Use 'gs' :cite:`Hie19gs`, 'kernel_herding' :cite:`Vishal22` or 'random' for
         for summarizing the landscape of large single-cell datasets.
     replace
         whether to sample with replacement (default=False)
@@ -73,7 +77,40 @@ def sketch(
 
     See `key_added` parameter description for the storage path of subsampled indices.
 
+    Example
+    -------
+    >>> import scanpy as sc
+    >>> import scanpy.external as sce
+
+    Load annotated dataset:
+
+    >>> adata = sc.datasets.pbmc3k_processed()
+
+    Run the cell sketching using geometric sketching:
+
+    >>> sce.tl.sketch(adata, n_sketch=128, use_rep="X_pca", method="gs", key_added = "gs")
+
+    Run the cell sketching using kernel herding:
+
+    >>> sce.tl.sketch(adata, n_sketch=128, use_rep="X_pca", method="kernel_herding", key_added = "kh")
+
+    Visualize the sketched dataset:
+
+    >>> adata_sketch_gs = adata[adata.obs['gs_sketch']]
+    >>> sc.pl.umap(adata_sketch_gs, color="louvain", size=100)
+    >>> adata_sketch_kh = adata[adata.obs['kh_sketch']]
+    >>> sc.pl.umap(adata_sketch_kh, color="louvain", size=100)
     """
+    # start = logg.info("Cell sketching")
+
+    if method == "gs":
+        try:
+            from geosketch import gs
+        except ImportError:
+            raise ImportError(
+                "Please install the package of geometric sketching:\n\t `pip install geosketch`."
+            )
+
     adata = adata.copy() if copy else adata
     if adata.is_view:
         adata._init_as_actual(adata.copy())
@@ -89,23 +126,17 @@ def sketch(
     if n_pcs is not None:
         adata.uns[key_added]["params"]["n_pcs"] = n_pcs
 
-    if random_state != 0:
-        adata.uns[key_added]["params"]["random_state"] = random_state
+    adata.uns[key_added]["params"]["random_state"] = random_state
     random_state = check_random_state(random_state)
 
     if n_sketch >= adata.n_obs:
         replace = True
-        warnings.warn(f"n_sketch too large, adjusting to sampling with replacement.")
+        warnings.warn("n_sketch too large, adjusting to sampling with replacement.")
 
     # find the representation for sketching
     X = _choose_representation(adata, use_rep=use_rep, n_pcs=n_pcs, silent=True)
     # main routine
     if method == "gs":
-        try:
-            from geosketch import gs
-        except ImportError:
-            raise ImportError("Please install geosketch: `pip install geosketch`.")
-
         # get the seed from random state
         random_seed = random_state.get_state()[1][0]
         sketch_index = gs(X, n_sketch, seed=random_seed, replace=replace)
@@ -113,7 +144,7 @@ def sketch(
     elif method == "kernel_herding":
         if replace:
             raise ValueError(
-                f"`kernel herding` cannot perform sampling with replacement, "
+                "`kernel herding` cannot perform sampling with replacement, "
                 "set `rsampling=False` or decrease the size of `n_sketch`."
             )
         if isinstance(X, scipy.sparse.csr_matrix):
@@ -151,6 +182,11 @@ def sketch(
         adata.obs[key_added] = False
         adata.obs.loc[adata.obs.index[sketch_index], key_added] = True
 
+    # logg.info(
+    #     "    finished",
+    #     time=start,
+    #     deep=f'added column: "{key_added}", sketch mask (bool) in `adata.obs` ',
+    # )
     return adata if copy else None
 
 
