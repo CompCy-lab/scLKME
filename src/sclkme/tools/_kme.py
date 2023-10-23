@@ -41,8 +41,88 @@ def kernel_mean_embedding(
     copy=False,
 ) -> Optional[AnnData]:
     """\
-    Compute the kernel mean embedding
+    Landmark-based Kernel Mean Embedding
 
+    *Kernel mean embedding* (KME) :cite:`` is a method used in machine learning and statistics
+    to map probability distribution into a Reproducing Kernel Hilbert Space (RKHS).
+    After embedding distributions into a RKHS, we can work with distributions in a more
+    tractable way.
+
+    Here, we applied the `KME` to sample distributions. By evaluating the transformed
+    distributions in the RKHS at the landmark cells, we align them at the same landmark
+    space, and generate a sample-by-landmark kernel score matrix as sample embeddings.
+
+    .. note::
+       To know more about the background of kernel mean embedding, please refer to this book :cite:``.
+
+    Parameters
+    ----------
+    adata
+        Annotated data of type `anndata.AnnData`
+    partition_key
+        Column key in the field of `adata.obs` indicating the sample ids
+    X_anchor
+        An numpy ndarray as embeddings of landmark cells. **Note**: `X_anchor`
+        should have the same dimension with the representation to be used in the `adata`.
+    n_pcs
+        Use this many PCs. If `n_pcs==0` use `.X` if `use_rep is None`
+    use_rep
+        Use the indicated representation. `'X'` or any key for `.obsm` is valid.
+        If `None`, the representation is chosen automatically:
+        For `.n_vars` < 50, `.X` is used, otherwise 'X_pca' is used.
+        If 'X_pca' is not present, it's computed with default parameters.
+    random_state
+        A random seed which supports an `int`, `None` and `numpy.random.RandomState`
+    method
+        method to use for kernel calculation, supporting two options `exact` an `approx`.
+        `exact` means directly calculate the kernel matrix. `approx` means that
+        the kernel is approximated by random fourier features :cite:``.
+    kernel
+        kernels to use. We support many kernels like `rbf`, `linear`, and `laplacian`.
+        For more kernels, see the global var: `sclkme.tl._kme._KernelCapable`.
+    kernel_kwds
+        A dic holding extra kwargs for the function of `sklearn.metrics.pairwise_kernels`
+        in the calculation of kernels between cells.
+    n_jobs
+        number of cpus to use in the calculation of kernels. `n_jobs = 0 or None` means
+        only use one CPU. `n_jobs > 0 and n_jobs < MAX_CPUS_AVAILABLE` will use that
+        number of cpus. `n_jobs = -1` means using all CPUs. For more details, check the
+        document of `sklearn.metrics.pairwise_kernels`.
+    key_added
+        If not specified, the results including params are stored in `.uns['kme']` as
+        a dict, and sample embeddings are stored in `.obs['X_kme']`.
+        If specified, the results are stored in `.uns[f{key_added}_kme]`, and the
+        sample embeddings are stored in `.obsm['X_kme']`.
+    copy
+        Return a copy instead of writing the results into `adata`.
+
+    Returns
+    -------
+    Depending on `copy`, updates or returns `adata` with the following fields.
+
+    **X_kme** : `adata.obsm` field
+        sample embeddings of data
+    **kme** or **{key_added}_kme**: `adata.uns` field
+        results from kernel mean embeddings, including both parameters and sample embeddings
+
+    Example
+    -------
+    >>> import sclkme
+    >>> import scanpy as sc
+
+    Load annotated dataset:
+
+    >>> adata = sc.datasets.pbmc3k_processed()
+
+    Run kernel mean embedding to generate sample embeddings
+
+    .. note::
+       Here, we just use the `louvain` field in `adata.obs` as **sample ids** for illustration.
+       In your application, you need to change it to your real sample ids.
+
+    >>> sclkme.tl.sketch(adata, n_sketch=128, use_rep="X_pca")
+    >>> X_anchor = adata[adata.obs['sketch']].obsm['X_pca'].copy()
+    >>> sclkme.tl.kernel_mean_embedding(adata, use_rep="X_pca", X_anchor=X_anchor)
     """
     # first we run the sketching algorithm to find the anchors
     adata = adata.copy() if copy else adata
