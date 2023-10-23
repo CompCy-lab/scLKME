@@ -15,7 +15,9 @@ scLKME is a computational approach designed for generating sample embeddings in 
 
 ## Installation
 
-scLKME requires `python` version >= 3.8. `scLKME` including its dependencies can be installed via PyPI by running:
+scLKME requires `python` version >= 3.8.
+
+ `scLKME` including its dependencies can be installed via PyPI by running:
 
 ```shell
 pip install sclkme
