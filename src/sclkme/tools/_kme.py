@@ -43,7 +43,7 @@ def kernel_mean_embedding(
     """\
     Landmark-based Kernel Mean Embedding
 
-    *Kernel mean embedding* (KME) :cite:`` is a method used in machine learning and statistics
+    *Kernel mean embedding* (KME) is a method used in machine learning and statistics
     to map probability distribution into a Reproducing Kernel Hilbert Space (RKHS).
     After embedding distributions into a RKHS, we can work with distributions in a more
     tractable way.
@@ -53,7 +53,7 @@ def kernel_mean_embedding(
     space, and generate a sample-by-landmark kernel score matrix as sample embeddings.
 
     .. note::
-       To know more about the background of kernel mean embedding, please refer to this book :cite:``.
+       To know more about the background of kernel mean embedding, please refer to this book :cite:`kme2017`.
 
     Parameters
     ----------
@@ -76,7 +76,7 @@ def kernel_mean_embedding(
     method
         method to use for kernel calculation, supporting two options `exact` an `approx`.
         `exact` means directly calculate the kernel matrix. `approx` means that
-        the kernel is approximated by random fourier features :cite:``.
+        the kernel is approximated by random fourier features :cite:`rahimi2007random`.
     kernel
         kernels to use. We support many kernels like `rbf`, `linear`, and `laplacian`.
         For more kernels, see the global var: `sclkme.tl._kme._KernelCapable`.
@@ -122,7 +122,7 @@ def kernel_mean_embedding(
 
     >>> sclkme.tl.sketch(adata, n_sketch=128, use_rep="X_pca")
     >>> X_anchor = adata[adata.obs['sketch']].obsm['X_pca'].copy()
-    >>> sclkme.tl.kernel_mean_embedding(adata, use_rep="X_pca", X_anchor=X_anchor)
+    >>> sclkme.tl.kernel_mean_embedding(adata, partition_key='louvain', use_rep="X_pca", X_anchor=X_anchor)
     """
     # first we run the sketching algorithm to find the anchors
     adata = adata.copy() if copy else adata

@@ -80,7 +80,7 @@ def sketch(
     Example
     -------
     >>> import scanpy as sc
-    >>> import scanpy.external as sce
+    >>> import sclkme
 
     Load annotated dataset:
 
@@ -88,11 +88,11 @@ def sketch(
 
     Run the cell sketching using geometric sketching:
 
-    >>> sce.tl.sketch(adata, n_sketch=128, use_rep="X_pca", method="gs", key_added = "gs")
+    >>> sclkme.tl.sketch(adata, n_sketch=128, use_rep="X_pca", method="gs", key_added = "gs")
 
     Run the cell sketching using kernel herding:
 
-    >>> sce.tl.sketch(adata, n_sketch=128, use_rep="X_pca", method="kernel_herding", key_added = "kh")
+    >>> sclkme.tl.sketch(adata, n_sketch=128, use_rep="X_pca", method="kernel_herding", key_added = "kh")
 
     Visualize the sketched dataset:
 
