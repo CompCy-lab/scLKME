@@ -2,7 +2,7 @@ scLKME: Landmark-based Multi-sample Single-cell Data Analysis
 =============================================================
 
 **scLKME** is an approach for sample-level analysis of multi-sample single-cell data. It uses
-landmark-based kernel mean embedding to convert . scLKME includes two steps:
+landmark-based kernel mean embedding to generate sample embeddings. scLKME includes two steps:
 
 1. `cell sketching`: identify a subset of cells as landmarks to summarize the cell landscape across samples.
 2. `kernel mean embedding`: transform cell distributions using kernel mean embedding and align them at the landmarks.
