@@ -1,9 +1,9 @@
 [tool.poetry]
 name = "sclkme"
-version = "0.1.0"
+version = "0.9.0"
 description = "A Landmark-based Approach for Generating Multi-cellular Sample Embeddings from Single-cell Data"
 authors = ["haidyi <haidyi@cs.unc.edu>"]
-license = "GPL2"
+license = "MIT"
 readme = "README.md"
 packages = [{include = "sclkme", from="src"}]
 
@@ -11,11 +11,14 @@ packages = [{include = "sclkme", from="src"}]
 python = "^3.8,<3.11"
 scanpy = "1.9.3"
 numpy = ">=1.20,<1.24"
-pandas = "1.4.4"
+pandas = "^1.4.4"
 geosketch = "^1.2"
 pycytodata = "0.1.1"
 readfcs = "^1.1.7"
 rich = "^13.6.0"
+
+[tool.poetry.group.dev]
+optional = true
 
 [tool.poetry.group.dev.dependencies]
 python-igraph = "^0.10.2"
@@ -26,6 +29,21 @@ mudata = "^0.2.3"
 jupyter = "^1.0.0"
 ipywidgets = "^8.1.1"
 statannotations = "^0.6.0"
+ipython = ">=7.20"
+
+[tool.poetry.group.doc]
+optional = true
+
+[tool.poetry.group.doc.dependencies]
+sphinx-rtd-theme = "<=1.1"
+sphinx = ">=5.3"
+sphinx-autodoc-annotation = "^1.0.post1"
+myst-nb = "^0.17.2"
+nbsphinx = ">=0.8.1"
+sphinx-copybutton = ">=0.5.0"
+sphinx-autodoc-typehints = ">=1.10.3"
+sphinxcontrib-bibtex = ">=2.3.0"
+sphinx-book-theme = "^1.0.1"
 
 [build-system]
 requires = ["poetry-core"]
