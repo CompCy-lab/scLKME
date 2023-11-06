@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "sclkme"
-version = "0.9.1"
+version = "0.9.3"
 description = "A Landmark-based Approach for Generating Multi-cellular Sample Embeddings from Single-cell Data"
 authors = ["haidyi <haidyi@cs.unc.edu>"]
 license = "MIT"
