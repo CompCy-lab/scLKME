@@ -57,9 +57,7 @@ For more details, examples and tutorials, check our [document](http://sclkme.rea
 
 | Tutorials                                             | Colab                                                        |
 | ----------------------------------------------------- | ------------------------------------------------------------ |
-| Cell Sketching                                        | <a target="_blank" href="https://colab.research.google.com/github/CompCy-lab/scLKME/blob/main/docs/notebooks/tutorials/tutorial_cell_sketching.ipynb">
-  <img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/>
-</a>
+| Cell Sketching                                        | <a target="_blank" href="https://colab.research.google.com/github/CompCy-lab/scLKME/blob/main/docs/notebooks/tutorials/tutorial_cell_sketching.ipynb"> <img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/> </a> |
 | Landmark-based multi-sample single-cell data analysis | <a target="_blank" href="https://colab.research.google.com/github/CompCy-lab/scLKME/blob/main/notebooks/preterm_analysis/kme_analysis.ipynb">  <img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a> |                                                             |
 
 
