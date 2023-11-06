@@ -26,6 +26,13 @@ scLKME requires `python` version >= 3.8,< 3.11.
 pip install sclkme
 ```
 
+## Data
+
+All the datasets used in this study are shared via `.h5ad` format. The datasets are available at:
+
+- Multi-species: [here](https://drive.google.com/file/d/1dAWzdNHo7pyt7y-xr7M-pGkVsTGF8aEQ/view?usp=drive_link)
+- Preterm: [here](https://drive.google.com/file/d/1vRKvU2kHQ464XnA9uRO-mRHH3UuNgGi3/view?usp=drive_link)
+- Myocardial Infarction: [here](https://drive.google.com/file/d/1Hf6sXg40D4fgz9cb9P0kDXimM8YOdE3m/view?usp=drive_link)
 
 
 ## Get started
