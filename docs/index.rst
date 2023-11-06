@@ -9,7 +9,7 @@ landmark-based kernel mean embedding to generate sample embeddings. scLKME inclu
 
 The workflow of **scLKME** is as follows:
 
-.. image:: ./_static/img/scLKME_workflow.png
+.. image:: https://raw.githubusercontent.com/CompCy-lab/scLKME/main/docs/_static/img/scLKME_workflow.png
    :alt: scLKME workflow figure
    :width: 800px
    :align: center
