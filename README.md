@@ -1,4 +1,7 @@
+[![PyPI version](https://badge.fury.io/py/sclkme.svg)](https://badge.fury.io/py/sclkme)
+[![Documentation Status](https://readthedocs.org/projects/sclkme/badge/?version=latest)](https://sclkme.readthedocs.io/en/latest/?badge=latest)
 [![scLKME](https://github.com/CompCy-lab/scLKME/actions/workflows/ci.yml/badge.svg)](https://github.com/CompCy-lab/scLKME/actions/workflows/ci.yml)
+
 
 # scLKME
 A Landmark-based Approach for Generating Multi-cellular Sample Embeddings from Single-cell Data
@@ -15,7 +18,7 @@ scLKME is a computational approach designed for generating sample embeddings in 
 
 ## Installation
 
-scLKME requires `python` version >= 3.8.
+scLKME requires `python` version >= 3.8,< 3.11.
 
  `scLKME` including its dependencies can be installed via PyPI by running:
 
@@ -46,7 +49,7 @@ sclkme.tl.kernel_mean_embedding(adata, partition_key="sample_id", X_anchor=X_anc
 adata.uns['kme'][f'{sample_id}_kme']
 ```
 
-For more details, examples and tutorials, check our [document]().
+For more details, examples and tutorials, check our [document](http://sclkme.readthedocs.io/).
 
 
 
@@ -54,11 +57,13 @@ For more details, examples and tutorials, check our [document]().
 
 | Tutorials                                             | Colab                                                        |
 | ----------------------------------------------------- | ------------------------------------------------------------ |
-| Cell Sketching                                        | <a target="_blank" href="https://colab.research.google.com/github/CompCy-lab/scLKME/blob/main/notebooks/preterm_analysis/kme_analysis.ipynb">  <img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a> |
-| Landmark-based multi-sample single-cell data analysis |                                                              |
+| Cell Sketching                                        | <a target="_blank" href="https://colab.research.google.com/github/CompCy-lab/scLKME/blob/main/docs/notebooks/tutorials/tutorial_cell_sketching.ipynb">
+  <img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/>
+</a>
+| Landmark-based multi-sample single-cell data analysis | <a target="_blank" href="https://colab.research.google.com/github/CompCy-lab/scLKME/blob/main/notebooks/preterm_analysis/kme_analysis.ipynb">  <img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a> |                                                             |
 
 
 
 ## Citation
 
-Blank
+TBD
