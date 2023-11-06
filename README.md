@@ -11,14 +11,14 @@ A Landmark-based Approach for Generating Multi-cellular Sample Embeddings from S
 scLKME is a computational approach designed for generating sample embeddings in multi-sample single-cell data. scLKME models samples as cell distributions, and leverages lanbmark-based kernel mean embedding to generate a sample-by-landmark kernel matrix as sample embeddings. The workflow of scLKME is as follows:
 
 <p align="center">
-<img align="middle" src="./docs/_static/img/scLKME_workflow.png" alt="scLKME workflow figure" width="800px" />
+<img align="middle" src="./docs/_static/img/scLKME_workflow.png" alt="scLKME workflow figure" width="600px" />
 </p>
 
 
 
 ## Installation
 
-scLKME requires `python` version >= 3.8,< 3.11.
+scLKME requires `python` version >= 3.8, < 3.11.
 
  `scLKME` including its dependencies can be installed via PyPI by running:
 
