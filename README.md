@@ -71,4 +71,11 @@ For more details, examples and tutorials, check our [document](http://sclkme.rea
 
 ## Citation
 
-TBD
+@article{yi2023sclkme,
+  title={scLKME: A Landmark-based Approach for Generating Multi-cellular Sample Embeddings from Single-cell Data},
+  author={Yi, Haidong and Stanley, Natalie},
+  journal={bioRxiv},
+  pages={2023--11},
+  year={2023},
+  publisher={Cold Spring Harbor Laboratory}
+}
